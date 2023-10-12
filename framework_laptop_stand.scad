@@ -7,6 +7,7 @@
 //     International License.
 
 include <MCAD/boxes.scad>;
+include <roundedcube.scad>;
 
 width = 100;
 height = 50;
@@ -22,7 +23,7 @@ num_laptops = 2;
 
 difference() {
     // Rounded cube as the core structure to cut out
-    translate([0, 0, -r]) roundedCube([width, end*2+wall+wall*num_laptops+framework_laptop_13*num_laptops, height+r], r, false);
+    translate([0, 0, -r]) roundedcube([width, end*2+wall+wall*num_laptops+framework_laptop_13*num_laptops, height+r], false, r);
     
     // Make the bottom flat
     translate([0, 0, -r]) cube([width, end*2+wall+wall*num_laptops+framework_laptop_13*num_laptops, r]);
