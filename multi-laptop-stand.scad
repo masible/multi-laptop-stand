@@ -17,14 +17,15 @@ r = 15;
 $fn = 128;
 
 // For each laptop, add its thickness to the array
-// FIXME the first thickness is used for all slots
-laptop_thickness = [ 16, 16 ];
+laptop_thickness = [ 16, 25, 33 ];
 
 // No changes below this
 num_laptops = len(laptop_thickness);
 
 function add(v, i = 0, r = 0) = i < len(v) ? add(v, i + 1, r + v[i]) : r;
 total_thickness = add(laptop_thickness);
+
+slot_offsets = [ for (a=0, b=0; a < len(laptop_thickness); a= a+1, b=b+(laptop_thickness[a-1]==undef?0:laptop_thickness[a-1]+wall)) b];
 
 difference() {
     // Rounded cube as the core structure to cut out
@@ -35,7 +36,7 @@ difference() {
     
     // Cut out the laptop slots
     for (i = [0:num_laptops-1]) {
-        translate([0, end+wall + i*(laptop_thickness[0] + wall), wall]) cube([width, laptop_thickness[0], height]);
+        translate([0, end+wall + slot_offsets[i], wall]) cube([width, laptop_thickness[i], height]);
     }
     
     // Round the ends
